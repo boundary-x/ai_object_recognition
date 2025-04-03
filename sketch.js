@@ -12,7 +12,7 @@ let isSendingData = false;
 let lastSentTime = 0; 
 const SEND_INTERVAL = 100; 
 
-// Video and ML variables
+
 let video;
 let detector;
 let detections = [];
@@ -20,11 +20,11 @@ let selectedObject = "person";
 let confidenceThreshold = 50; 
 let isObjectDetectionActive = false; 
 
-// Camera control variables
+
 let facingMode = "user"; 
 let isFlipped = false;   
 
-// UI elements
+
 let flipButton, switchCameraButton, connectBluetoothButton, disconnectBluetoothButton;
 let startDetectionButton, stopDetectionButton;
 let objectSelect, confidenceSlider;
@@ -32,17 +32,20 @@ let confidenceLabel;
 let dataDisplay;
 
 function preload() {
-  // Load COCO-SSD object detection model
+  
   detector = ml5.objectDetector("cocossd");
 }
 
 function setup() {
+  
   let canvas = createCanvas(400, 300);
   canvas.parent('p5-container');
   canvas.style('border-radius', '20px');
   
+  
   setupCamera();
 
+  
   createUI();
 }
 
@@ -50,7 +53,7 @@ function setupCamera() {
   video = createCapture({
     video: {
       facingMode: facingMode,
-      width: 400,
+      width: 400,  
       height: 300 
     }
   });
@@ -59,11 +62,11 @@ function setupCamera() {
 }
 
 function createUI() {
-  // Data display area
+  
   dataDisplay = select('#dataDisplay');
   dataDisplay.html("마이크로비트로 전송된 데이터: 없음");
 
-  // Camera control buttons
+  
   flipButton = createButton("↔️ 카메라 좌우 반전");
   flipButton.parent('camera-control-buttons');
   flipButton.mousePressed(toggleFlip);
@@ -72,7 +75,7 @@ function createUI() {
   switchCameraButton.parent('camera-control-buttons');
   switchCameraButton.mousePressed(switchCamera);
 
-  // Bluetooth control buttons
+  
   connectBluetoothButton = createButton("🔗 블루투스 연결");
   connectBluetoothButton.parent('bluetooth-control-buttons');
   connectBluetoothButton.mousePressed(connectBluetooth);
@@ -81,11 +84,11 @@ function createUI() {
   disconnectBluetoothButton.parent('bluetooth-control-buttons');
   disconnectBluetoothButton.mousePressed(disconnectBluetooth);
 
-  // Object selection dropdown
+  
   objectSelect = createSelect();
   objectSelect.parent('object-select-container');
 
-  // COCO-SSD object list
+  
   const objectList = [
     "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
     "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
@@ -106,7 +109,7 @@ function createUI() {
     selectedObject = objectSelect.value();
   });
 
-  // Confidence slider
+  
   confidenceSlider = createSlider(0, 100, 50);
   confidenceSlider.parent('confidence-container');
   confidenceSlider.input(() => {
@@ -117,7 +120,7 @@ function createUI() {
   confidenceLabel = createDiv(`Confidence: ${confidenceThreshold}%`);
   confidenceLabel.parent('confidence-container');
 
-  // Object detection control buttons
+  
   startDetectionButton = createButton("🟢 사물 인식 시작");
   startDetectionButton.parent('object-control-buttons');
   startDetectionButton.id('startDetectionButton');
@@ -137,6 +140,7 @@ function createUI() {
     sendBluetoothData("stop"); 
   });
 
+  
   updateBluetoothStatus();
 }
 
@@ -153,6 +157,7 @@ function switchCamera() {
 function startObjectDetection() {
   isObjectDetectionActive = true;
   detector.detect(video, gotDetections); 
+}
 
 function stopObjectDetection() {
   isObjectDetectionActive = false;
@@ -200,7 +205,6 @@ function draw() {
     
     detections.forEach((object) => {
       if (object.label === selectedObject && object.confidence * 100 >= confidenceThreshold) {
-        // 좌우 반전 고려하여 좌표 조정
         let x = isFlipped ? width - object.x - object.width : object.x;
         let y = object.y;
         let w = object.width;
@@ -336,6 +340,6 @@ async function sendBluetoothData(x, y, width, height, detectedCount) {
   } catch (error) {
     console.error("Error sending data:", error);
   } finally {
-    isSendingData = false; // 데이터 전송 완료
+    isSendingData = false; 
   }
 }
