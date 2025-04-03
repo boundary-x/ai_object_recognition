@@ -16,7 +16,6 @@ body {
   position: relative;
 }
 
-/* 배경에 흐릿한 AI 느낌의 원 패턴 추가 */
 body::before {
   content: '';
   position: absolute;
@@ -28,7 +27,6 @@ body::before {
   z-index: -1;
 }
 
-/* 헤더 스타일 */
 header {
   width: 100%;
   padding: 1rem 2vw;
@@ -76,7 +74,6 @@ header {
   animation: pulse 0.5s infinite;
 }
 
-/* 메인 컨텐츠 */
 main {
   width: 100%;
   display: flex;
@@ -108,7 +105,6 @@ canvas {
   height: 300px;
 }
 
-/* 컨트롤 섹션 */
 .controls {
   width: 90vw;
   max-width: 700px;
@@ -177,9 +173,9 @@ button:hover {
   animation: pulse 0.5s infinite;
 }
 
-/* 사물 인식 시작/중지 버튼 색상 오버라이드 */
+
 button[id="startDetectionButton"] {
-  background: #88EE8C; /* 초록색 */
+  background: #88EE8C; 
 }
 
 button[id="startDetectionButton"]:hover {
@@ -187,7 +183,7 @@ button[id="startDetectionButton"]:hover {
 }
 
 button[id="stopDetectionButton"] {
-  background: #EE776E; /* 빨간색 */
+  background: #EE776E; 
 }
 
 button[id="stopDetectionButton"]:hover {
@@ -255,7 +251,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
   gap: 1.5vh;
 }
 
-/* 스마트폰 가로 화면 최적화 */
 @media only screen and (orientation: landscape) and (max-width: 900px) {
   main {
     flex-direction: column;
@@ -384,7 +379,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   }
 }
 
-/* 푸터 스타일 */
+
 footer {
   width: 100%;
   padding: 1rem 2vw;
@@ -399,7 +394,7 @@ footer p {
   margin: 0;
 }
 
-/* 애니메이션 정의 */
+
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
