@@ -53,8 +53,8 @@ function setupCamera() {
   video = createCapture({
     video: {
       facingMode: facingMode,
-      width: 400,  
-      height: 300 
+      width: 400,  // 고정 폭
+      height: 300 // 고정 높이
     }
   });
   video.size(400, 300);
@@ -137,7 +137,7 @@ function createUI() {
   stopDetectionButton.id('stopDetectionButton');
   stopDetectionButton.mousePressed(() => {
     stopObjectDetection();
-    sendBluetoothData("stop"); 
+    sendBluetoothData("stop"); // Stop 신호 전송
   });
 
   // 초기 블루투스 상태 업데이트
@@ -156,12 +156,12 @@ function switchCamera() {
 
 function startObjectDetection() {
   isObjectDetectionActive = true;
-  detector.detect(video, gotDetections); 
+  detector.detect(video, gotDetections); // Start detecting
 }
 
 function stopObjectDetection() {
   isObjectDetectionActive = false;
-  detections = []; 
+  detections = []; // Clear detections
 }
 
 function gotDetections(error, results) {
@@ -171,7 +171,7 @@ function gotDetections(error, results) {
   }
   detections = results;
   if (isObjectDetectionActive) {
-    detector.detect(video, gotDetections); 
+    detector.detect(video, gotDetections); // Continue detecting
   }
 }
 
@@ -190,7 +190,7 @@ function draw() {
 
   if (isObjectDetectionActive) {
     let highestConfidenceObject = null;
-    let detectedCount = 0; 
+    let detectedCount = 0; // 객체 개수 카운트
 
     // 여러 객체에 대해 가장 신뢰도가 높은 객체 찾기
     detections.forEach((object) => {
@@ -198,7 +198,7 @@ function draw() {
         if (!highestConfidenceObject || object.confidence > highestConfidenceObject.confidence) {
           highestConfidenceObject = object;
         }
-        detectedCount++; 
+        detectedCount++; // 인식된 객체 개수 증가
       }
     });
 
@@ -213,9 +213,9 @@ function draw() {
 
         // 신뢰도가 가장 높은 객체는 파란색 바운딩 박스
         if (object === highestConfidenceObject) {
-          stroke(0, 0, 255);  
+          stroke(0, 0, 255);  // 파란색
         } else {
-          stroke(0, 255, 0);  
+          stroke(0, 255, 0);  // 다른 객체는 초록색
         }
         strokeWeight(2);
         noFill();
@@ -241,7 +241,7 @@ function draw() {
 
     // 감지된 객체가 없을 경우 null 데이터를 전송
     if (!highestConfidenceObject) {
-      sendBluetoothData(null); 
+      sendBluetoothData(null); // null 데이터 전송
       dataDisplay.html("마이크로비트로 전송된 데이터: 없음");
     }
   }
@@ -287,10 +287,10 @@ function updateBluetoothStatus() {
   const statusElement = select("#bluetoothStatus");
   statusElement.html(`상태: ${bluetoothStatus}`);
   if (isConnected) {
-    statusElement.style('background-color', '#d0f0fd'); 
+    statusElement.style('background-color', '#d0f0fd'); // 연결됨: 연한 파랑
     statusElement.style('color', '#FE818D');
   } else {
-    statusElement.style('background-color', '#f9f9f9'); 
+    statusElement.style('background-color', '#f9f9f9'); // 연결 안 됨: 회색
     statusElement.style('color', '#FE818D');
   }
 }
